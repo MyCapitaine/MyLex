@@ -4,7 +4,7 @@
 require "./NFA.rb"
 
 class RE 
-
+	public
 	def initialize(value)
 		@value = value
 		count = 0
@@ -26,9 +26,12 @@ class RE
 
 	def toNFA
 		return nil if @invalid
-		afterDot = addDots(@value)
+		afterParentheses = addParentheses(@value)
+		afterDot = addDots(afterParentheses)
 		postfix = toPostfixExpression(afterDot)
 
+
+		
 
 	end
 
@@ -37,10 +40,39 @@ class RE
 	#add parentheses for * and +
 	# (a|b)*a -> ((a|b)*a) -> (((a|b)*)a)
 	def addParentheses(str)
+		indexes = []
+		count = -2
+		str.each_char { |ch|
+			indexes << (count += 2) if ch == '+' || ch == '*'
+			count += 1
+		}
+
+		indexes.each { |index|
+			str[index] = str[index] + ')'
+
+			if str[index - 1] == ')'
+				parenthesesCount = 0
+
+				(1..index).each_with_index { |i|
+					i = index - i
+					if str[i] == ')'
+						parenthesesCount += 1
+					elsif str[i] == '('
+						parenthesesCount -= 1
+						if parenthesesCount == 0
+							str[i] = '(('
+							break 
+						end
+					end
+
+				}
+			else 
+				str[index - 1] = '(' + str[index - 1]
+			end
+		}
+
+
 		str = "(" + str + ")"
-
-
-
 
 	end
 
@@ -101,7 +133,6 @@ class RE
 	#combine infix sublist to a postfix element
 	#["a", "|", "cd|*"] -> "acd|*|"
 	def combine(subStack)
-		# print subStack.to_s, "\n"
 		stack = []
 		subStack.each { |ele|
 			case ele

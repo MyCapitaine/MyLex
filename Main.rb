@@ -11,3 +11,4 @@ require "./RE.rb"
 
 print RE.new("((a|b)*(a|b))*(a|b)*(a|b)").toNFA, "\n"
 print RE.new("((((a|b)*)(a|b))*)((a|b)*)(a|b)").toNFA, "\n"
+
