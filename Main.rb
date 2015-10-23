@@ -9,6 +9,5 @@ require "./RE.rb"
 # lex = Lex.new
 
 
-print RE.new("(((ac(a)da)|b)*(a|b))*(a|b)*(a|b)").toNFA
-print "\n"
-
+print RE.new("((a|b)*(a|b))*(a|b)*(a|b)").toNFA, "\n"
+print RE.new("((((a|b)*)(a|b))*)((a|b)*)(a|b)").toNFA, "\n"
