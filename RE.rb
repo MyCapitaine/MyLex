@@ -7,16 +7,45 @@ class RE
 
 	def initialize(value)
 		@value = value
+		count = 0
+		@invalid = false
+		value.each_char { |ch|
+			if ch == '('
+				count += 1
+			elsif ch == ')'
+				if (count -= 1) < 0
+					@invalid = true
+					break
+				end
+			end
+
+		}
+		@invalid = true if count != 0
+
 	end
 
 	def toNFA
+		return nil if @invalid
 		afterDot = addDots(@value)
-		post = toPostExpres(afterDot)
+		postfix = toPostfixExpression(afterDot)
 
 
 	end
 
 	private 
+	#add outermost parentheses
+	#add parentheses for * and +
+	# (a|b)*a -> ((a|b)*a) -> (((a|b)*)a)
+	def addParentheses(str)
+		str = "(" + str + ")"
+
+
+
+
+	end
+
+	#add dots to connect the neighbor express
+	#ab(ab)c -> a#b#(ab)#c
 	def addDots(beforeDot)
 		afterDot = ""
 		approachLast = false
@@ -47,50 +76,51 @@ class RE
 		afterDot
 	end
 
-
-	def toPostExpres(pre)
+	#tranlate infix to postfix
+	#a|b -> ab|
+	def toPostfixExpression(infix)
 		stack = []
 		count = 0
-		pre.each_char { |ch|
+		infix.each_char { |ch|
 			if ch == ')'
-				buffer = ''
+				buffer = []
 				c = ''
 				while (c = stack.pop) != '('
 					buffer << c
 				end
-				stack << combine(buffer)
+				stack << combine(buffer.reverse)
 			else
 				stack << ch
 			end
 
 		}
-		# print stack.methods
-		stack.to_s
+		stack[0]
+
 	end
 
-	def combine(express)
+	#combine infix sublist to a postfix element
+	#["a", "|", "cd|*"] -> "acd|*|"
+	def combine(subStack)
+		# print subStack.to_s, "\n"
 		stack = []
-		express.each_char { |ch|
-			case ch
+		subStack.each { |ele|
+			case ele
 			when '+', '*'
-				stack.last << ch
+				stack.last << ele
 			when '|', '#'
-				stack << ch
+				stack << ele
 			else 
 				if stack.size < 2
-					stack << ch 
+					stack << ele 
 				else
-
-					while!!!!!!!!!!!!!!!!!!!!!!
 					sign = stack.pop
 					arg1 = stack.pop
-					arg2 = ch
+					arg2 = ele
 					stack << (arg1 + arg2 + sign)
 				end
 			end
 
 		}
-		print stack.to_s, "\n"
 		stack[0]
 	end
 
