@@ -25,8 +25,9 @@ class Lex
 	def load
 		File.open(LoadRoad, "r") { |file|  
 			instance_eval file.read
-			print RE.new(@student).toNFA
 		}
+
+		RE.new(@student).toNFA
 	end
 
 end

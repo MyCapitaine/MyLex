@@ -25,20 +25,21 @@ class RE
 	end
 
 	def toNFA
+		#regard weather |'('| <> |')'|
 		return nil if @invalid
 		afterParentheses = addParentheses(@value)
 		afterDot = addDots(afterParentheses)
 		postfix = toPostfixExpression(afterDot)
 
-
-		
-
+		NFA.new postfix
 	end
 
-	private 
-	#add outermost parentheses
-	#add parentheses for * and +
-	# (a|b)*a -> ((a|b)*a) -> (((a|b)*)a)
+	private
+=begin	 
+	add outermost parentheses
+	add parentheses for * and +
+	(a|b)*a -> ((a|b)*a) -> (((a|b)*)a)
+=end
 	def addParentheses(str)
 		indexes = []
 		count = -2
@@ -76,8 +77,10 @@ class RE
 
 	end
 
-	#add dots to connect the neighbor express
-	#ab(ab)c -> a#b#(ab)#c
+=begin
+	add dots to connect the neighbor express
+	ab(ab)c -> a#b#(ab)#c
+=end
 	def addDots(beforeDot)
 		afterDot = ""
 		approachLast = false
@@ -108,8 +111,11 @@ class RE
 		afterDot
 	end
 
-	#tranlate infix to postfix
-	#a|b -> ab|
+
+=begin
+	tranlate infix to postfix
+	a|b -> ab|
+=end
 	def toPostfixExpression(infix)
 		stack = []
 		count = 0
@@ -130,8 +136,10 @@ class RE
 
 	end
 
-	#combine infix sublist to a postfix element
-	#["a", "|", "cd|*"] -> "acd|*|"
+=begin
+	combine infix sublist to a postfix element
+	["a", "|", "cd|*"] -> "acd|*|"
+=end	
 	def combine(subStack)
 		stack = []
 		subStack.each { |ele|

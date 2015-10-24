@@ -3,7 +3,7 @@
 #auxiliary procedures
 	def createMC(mcs)
 		mcs.each {|mcName|
-			eval("class #{mcName} \n" + "end")
+			eval("class #{mcName} \nend")
 		}
 	end
 

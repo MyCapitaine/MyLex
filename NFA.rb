@@ -1,8 +1,13 @@
 #NFA struct
-
+#
+#
 class NFA
-	def initialize(nodeList)
-		@nodeList = nodeList
+	def initialize(postfix)
+		print postfix, "\n"
+
+		@nodeList = []
+
+
 	end
 
 
