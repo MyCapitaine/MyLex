@@ -1,8 +1,9 @@
 #DFA struct
-
+#
+#
 class DFA
 
-
+    attr_reader :statusList
 
 	def toDFAO
 	end
@@ -11,7 +12,12 @@ class DFA
 end
 
 
+=begin
+status of DFA
+=end
+class Status
 
+end
 
 
 
