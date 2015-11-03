@@ -30,8 +30,8 @@ class RE
 		afterParentheses = addParentheses(@value)
 		afterDot = addDots(afterParentheses)
 		postfix = toPostfixExpression(afterDot)
-
-		NFA.new postfix
+		
+		NFA.new(postfix)
 	end
 
 	private

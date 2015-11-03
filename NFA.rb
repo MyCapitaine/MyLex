@@ -1,6 +1,7 @@
 #NFA struct
 #
 #it only works when use right posfixExpression, obviously)
+require "./DFA.rb"
 class NFA
     #each nodes will be sign up and save in this list
     attr_reader :nodeList
@@ -11,7 +12,7 @@ class NFA
         
 		@nodeList = []
         nodeSetStack = []
-        posfix.each_char { |ch|
+        postfix.each_char { |ch|
             case ch
             when '+'
                 #not support now
@@ -21,7 +22,7 @@ class NFA
                 newTail = Node.new([], nil, nil)
                 @nodeList << newTail
                 newTailNum = @nodeList.size
-                newHead = Node.new([oldNodeSet.headNum, newTailNum], nil. nil)
+                newHead = Node.new([oldNodeSet.headNum, newTailNum], nil, nil)
                 @nodeList << newHead
                 newHeadNum = @nodeList.size
                 
@@ -72,6 +73,7 @@ class NFA
 
 
 	def toDFA
+        DFA.new(self)
 	end
     
     
@@ -90,7 +92,7 @@ class Node
     #have no refKey&refValue when refKey = nil
     attr_reader :refKey, :refValue
     def initialize(upsilonRefList, refKey, refValue)
-        @upsilonRefList = upsilonRefList == nil? [] : upsilonRefList
+        @upsilonRefList = upsilonRefList
         @refKey = refKey
         @refValue = refValue
     end
