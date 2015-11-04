@@ -26,7 +26,7 @@
 
 
 #translation rules
-
+	@student_method 
 
 
 

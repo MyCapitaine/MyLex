@@ -27,7 +27,7 @@ class Lex
 			instance_eval file.read
 		}
 
-		RE.new(@student).toNFA
+		RE.new(@student).toNFA.toDFA
 	end
 
 end

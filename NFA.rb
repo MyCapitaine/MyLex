@@ -21,10 +21,10 @@ class NFA
                 
                 newTail = Node.new([], nil, nil)
                 @nodeList << newTail
-                newTailNum = @nodeList.size
+                newTailNum = @nodeList.size - 1
                 newHead = Node.new([oldNodeSet.headNum, newTailNum], nil, nil)
                 @nodeList << newHead
-                newHeadNum = @nodeList.size
+                newHeadNum = @nodeList.size - 1
                 
                 @nodeList[oldNodeSet.tailNum].upsilonRefList << oldNodeSet.headNum << newTailNum
                 
@@ -36,10 +36,10 @@ class NFA
                 
                 newHead = Node.new([nodeSet1.headNum, nodeSet2.headNum], nil, nil)
                 @nodeList << newHead
-                newHeadNum = @nodeList.size
+                newHeadNum = @nodeList.size - 1
                 newTail = Node.new([], nil, nil)
                 @nodeList << newTail
-                newTailNum = @nodeList.size
+                newTailNum = @nodeList.size - 1
                 
                 @nodeList[nodeSet1.tailNum].upsilonRefList << newTailNum
                 @nodeList[nodeSet2.tailNum].upsilonRefList << newTailNum
@@ -57,10 +57,10 @@ class NFA
             else
                 tail = Node.new([], nil, nil)
                 @nodeList << tail
-                tailNum = @nodeList.size
+                tailNum = @nodeList.size - 1
                 head = Node.new([], ch, tailNum)
                 @nodeList << head
-                headNum = @nodeList.size
+                headNum = @nodeList.size - 1
                 nodeSetStack << NodeSet.new(headNum, tailNum)
                 
             end
@@ -86,7 +86,7 @@ strcut of NFA nodes
 save references of nodes
 =end
 class Node
-    #save the number of upsilon references 
+    #save the number of *one step* upsilon references 
     attr_accessor :upsilonRefList
     #save the key ref and value/number of ref 
     #have no refKey&refValue when refKey = nil
@@ -97,7 +97,12 @@ class Node
         @refValue = refValue
     end
     
-    
+    def ref(key) 
+        return @refValue if key == @refKey
+        return nil
+    end
+
+
 end
 
 =begin
