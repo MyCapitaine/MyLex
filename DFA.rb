@@ -2,11 +2,12 @@
 #
 #
 require "./NFA.rb"
+require "./DFAO.rb"
 require "set"
 class DFA
 
     attr_reader :statusList, :finalNumSet
-
+    attr_reader :nfa
 
     def initialize(nfa) 
         @nfa = nfa
@@ -65,6 +66,7 @@ class DFA
     end
 
 	def toDFAO
+        DFAO.new(self)
 	end
 
 

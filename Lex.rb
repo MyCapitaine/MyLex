@@ -10,11 +10,6 @@ class Lex
 	#road
 	LoadRoad = "profile.l"
 
-	#words
-	Declaration = "declaration"
-	TranslationRules = "translation rules"
-	AuxiliaryProcedures = "auxiliary procedures"
-
 	def initialize
 		load
 
@@ -27,7 +22,7 @@ class Lex
 			instance_eval file.read
 		}
 
-		RE.new(@student).toNFA.toDFA
+		RE.new(@student).toNFA.toDFA.toDFAO
 	end
 
 end
