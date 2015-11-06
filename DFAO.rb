@@ -43,26 +43,8 @@ class DFAO
 				ostatus.hashList[key] = statusToOstatusHash[value]
 			}
 
-			# p ostatus.hashList
+			p ostatus.hashList
 		}
-
-	end
-
-
-
-
-
-
-
-	def toProgram
-		programInner = "#produce by lex\n\n"
-		
-
-
-
-
-
-
 
 	end
 
@@ -71,13 +53,9 @@ end
 
 class OStatus
 	attr_reader :hashList, :statusSet
-
 	def initialize(hashList, originStatusNum)
 		@hashList = hashList
 		@statusSet = [originStatusNum]
-
 	end
-
-
 end	
 

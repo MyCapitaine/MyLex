@@ -3,6 +3,7 @@
 #
 #
 require "./RE.rb"
+require "./DFAO.rb"
 
 class Lex
 
@@ -12,7 +13,7 @@ class Lex
 
 	def initialize
 		load
-
+		
 
 	end
 
@@ -22,9 +23,21 @@ class Lex
 			instance_eval file.read
 		}
 
-		RE.new(@student).toNFA.toDFA.toDFAO
+		REs = self.instance_variables
+
+
+		# RE.new(@student).toNFA.toDFA.toDFAO
+		# print self.methods
+		# print self.instance_variables[0]
+		print self.singleton_methods
 	end
 
+	def toProgram(dfao)
+		
+
+
+		
+	end
 end
 
 
