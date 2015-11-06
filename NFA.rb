@@ -5,11 +5,14 @@ require "./DFA.rb"
 class NFA
     #each nodes will be sign up and save in this list
     attr_reader :nodeList
-    #num of begin and end node
-    attr_reader :begin, :end
+    #num of begin node
+    attr_reader :begin
+    #num of end nodes
+    #includes the function from ending to num
+    attr_reader :end
 	def initialize(postfix)
 		#print postfix, "\n"
-        
+        @end = []
 		@nodeList = []
         nodeSetStack = []
         postfix.each_char { |ch|
@@ -46,6 +49,21 @@ class NFA
                 newNodeSet = NodeSet.new(newHeadNum, newTailNum)
                 nodeSetStack << newNodeSet
                 
+            when ';'
+                nodeSet2 = nodeSetStack.pop
+                nodeSet1 = nodeSetStack.pop
+
+                newHead = Node.new([nodeSet1.headNum, nodeSet2.headNum], nil, nil)
+                @nodeList << newHead
+                newHeadNum = @nodeList.size - 1
+
+                @end << nodeSet1.tailNum if nodeSet1.tailNum != nil
+                @end << nodeSet2.tailNum if nodeSet2.tailNum != nil
+
+                newNodeSet = NodeSet.new(newHeadNum, nil)
+                nodeSetStack << newNodeSet
+
+
             when '#'
                 nodeSetPost = nodeSetStack.pop
                 nodeSetPre = nodeSetStack.pop
@@ -53,7 +71,7 @@ class NFA
                 
                 newNodeSet = NodeSet.new(nodeSetPre.headNum, nodeSetPost.tailNum)
                 nodeSetStack << newNodeSet
-                
+
             else
                 tail = Node.new([], nil, nil)
                 @nodeList << tail
@@ -65,9 +83,8 @@ class NFA
                 
             end
         }
-        
+        @end << nodeSetStack[0].tailNum if @end.empty?
         @begin = nodeSetStack[0].headNum
-        @end = nodeSetStack[0].tailNum
         
 	end
 

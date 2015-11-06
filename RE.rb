@@ -74,7 +74,7 @@ class RE
 
 
 		str = "(" + str + ")"
-
+		
 	end
 
 =begin
@@ -88,7 +88,7 @@ class RE
 		beforeDot.each_char { |ch|
 			if approachLast
 				case ch
-				when '|' 
+				when '|', ';'
 					approachLast = false
 				when '*', '+', ')' 
 				when '(' 
@@ -100,7 +100,7 @@ class RE
 
 			else
 				case ch
-				when '(', '+', '*', '|'
+				when '(', '+', '*', '|', ';'
 				else
 					approachLast = true
 				end
@@ -108,6 +108,7 @@ class RE
 
 			afterDot << ch
 		}
+		# print afterDot
 		afterDot
 	end
 
@@ -146,7 +147,7 @@ class RE
 			case ele
 			when '+', '*'
 				stack.last << ele
-			when '|', '#'
+			when '|', '#', ';'
 				stack << ele
 			else 
 				if stack.size < 2

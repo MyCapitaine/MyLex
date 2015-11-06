@@ -21,30 +21,27 @@
 	name = "(#{highLetter}#{lowLetter}#{lowLetter}*( #{highLetter}#{lowLetter}#{lowLetter}*)*)"
 	@student = "((<student name=)#{name}( id=)#{studentId}(\/>))"
 
-	run = "(r|Ru|Un|Ns|S)"
-	walk = "(w|Wa|Al|Lk|Ks|S)"
-	smile = "(s|Sm|Mi|Il|Le|Es|S)"
+	run = "((r|R)(u|U)(n|N)(s|S))"
+	walk = "((w|W)(a|A)(l|L)(k|K)(s|S))"
+	smile = "((s|S)(m|M)(i|I)(l|L)(e|E)(s|S))"
 	@singleAction = "#{run}|#{walk}|#{smile}"
 
-	kick = "(k|Ki|Ic|Ck|Ks|S)"
-	slap = "(s|Sl|La|Ap|Ps|S)"
-	kiss = "(k|Si|Is|Ss|Se|Es|S)"
+	kick = "((k|K)(i|I)(c|C)(k|K)(s|S))"
+	slap = "((s|S)(l|L)(a|A)(p|P)(s|S))"
+	kiss = "((k|K)(i|I)(s|S)(s|S)(e|E)(s|S))"
 	@flexAction = "#{kick}|#{slap}|#{kiss}"
 
 
 
 #translation rules
-	def student=
+	@@trans[:@student] = Proc.new{
 		Student.new
-	end
-
-	def singleAction=
+	}
+	@@trans[:@singleAction] = Proc.new{
 		SingleAction.new
-	end
-
-	def flexAction=
+	}
+	@@trans[:@flexAction] = Proc.new{
 		FlexAction.new
-	end
-	
+	}
 
 

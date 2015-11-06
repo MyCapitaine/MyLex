@@ -12,32 +12,31 @@ class Lex
 	LoadRoad = "profile.l"
 
 	def initialize
-		load
-		
-
-	end
-
-	private
-	def load
+		@@trans = {}
 		File.open(LoadRoad, "r") { |file|  
 			instance_eval file.read
 		}
 
-		REs = self.instance_variables
+		@res = self.instance_variables
+		aboveRE = ""
+		@res.each { |re|
+			aboveRE += ("(" + self.instance_variable_get(re) + ");")
+		}
+		aboveRE[aboveRE.size - 1] = ""
 
-
-		# RE.new(@student).toNFA.toDFA.toDFAO
-		# print self.methods
-		# print self.instance_variables[0]
-		print self.singleton_methods
+		dfao = RE.new(aboveRE).toNFA.toDFA.toDFAO
+		toProgram dfao
 	end
 
 	def toProgram(dfao)
-		
+		programInner = "#produce by lex\n\n"
+
+		programInner += ""
 
 
-		
+
 	end
 end
 
-
+class UnknowSign
+end

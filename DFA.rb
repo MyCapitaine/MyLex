@@ -6,8 +6,11 @@ require "./DFAO.rb"
 require "set"
 class DFA
 
-    attr_reader :statusList, :finalNumSet
+    attr_reader :statusList, :finalNumList
+    attr_reader :begin
     attr_reader :nfa
+
+    #the first status in the list is the begin
 
     def initialize(nfa) 
         @nfa = nfa
@@ -15,10 +18,11 @@ class DFA
 
 
     	@statusList = []
-    	@finalNumSet = Set.new
+    	@finalNumList = []
 
         #origin status
     	statusList << Status.new(searchStatusSet(Set.new([nfa.begin])))
+        @begin = statusList.size - 1
 
     	statusList.each { |status|
             signSet = Set.new
@@ -54,13 +58,24 @@ class DFA
 
 
     	}
-
-        statusNum = 0;
+        statusNum = 0
         statusList.each { |status|
-            finalNumSet << statusNum if status.nodeSet.include? nfa.end
+            endCount = 0
+            nfa.end.each { |endNum|
+                if status.nodeSet.include? endNum
+                    status.isEndStatus = true
+                    if finalNumList[endCount] == nil
+                        finalNumList[endCount] = [statusNum]
+                    else
+                        finalNumList[endCount] << statusNum
+                    end
+                    break
+                end    
+                endCount += 1
+            }
             statusNum += 1
         }
-
+        # p finalNumList
         # p statusList
         # p statusList.size
     end
@@ -92,9 +107,11 @@ status of DFA
 =end
 class Status
 	attr_reader :nodeSet, :hashList
+    attr_accessor :isEndStatus
 	def initialize(nodeSet)
 		@nodeSet = nodeSet
         @hashList = {}
+        @isEndStatus = false
 	end
 
 end
