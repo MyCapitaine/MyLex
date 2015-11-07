@@ -49,7 +49,7 @@ def control
 	File.open("./inStream", "r") { |file| 
 		strings = file.read
 	}
-	strings << "\n"
+	strings << "\\n"
 
 	tokens = []
 	unrecognizing = 0

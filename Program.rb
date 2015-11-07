@@ -17,8 +17,7 @@ def control
 	File.open("./inStream", "r") { |file| 
 		strings = file.read
 	}
-	strings << "
-"
+	strings << "\n"
 
 	tokens = []
 	unrecognizing = 0
