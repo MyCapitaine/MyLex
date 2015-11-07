@@ -1,17 +1,12 @@
 
 
 #auxiliary procedures
-	def MC(mcs)
-		mcs.each {|mcName|
-			eval("class #{mcName} \nend")
-		}
-	end
 
 
 
 
 #declaration
-	MC ["Student", "SingleAction", "FlexAction"]
+	@@mc = ["Student", "SingleAction", "FlexAction"]
 
 	digit = "(0|1|2|3|4|5|6|7|8|9)"
 	lowLetter = "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)"
@@ -34,14 +29,14 @@
 
 
 #translation rules
-	@@trans[:@student] = Proc.new{
+	@@trans[:@student] = <<EOF
 		Student.new
-	}
-	@@trans[:@singleAction] = Proc.new{
+EOF
+	@@trans[:@singleAction] = <<EOF
 		SingleAction.new
-	}
-	@@trans[:@flexAction] = Proc.new{
+EOF
+	@@trans[:@flexAction] = <<EOF
 		FlexAction.new
-	}
+EOF
 
 

@@ -79,7 +79,7 @@ class DFAO
 				ostatus.hashList[key] = statusToOstatusHash[value]
 			}
 
-			p ostatus.hashList
+			# p ostatus.hashList
 			# p ostatus.statusSet
 
 		}
