@@ -96,8 +96,14 @@ def control
 
 	}
 
+	outStr = ""
 	tokens.each { |token|
-		print token.class, "\\n"
+		outStr << token.class.to_s << "\\n"
+	}
+	print outStr
+
+	File.open("./outStream", "w") { |file| 
+		file.write outStr
 	}
 end
 
